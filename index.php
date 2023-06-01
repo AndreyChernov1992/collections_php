@@ -34,7 +34,6 @@ if(!empty($content) && isset($_POST["string"])){
         fclose($f);
         echo $result;
     }   
-    var_dump ($unserr);
 }
 
 if(empty($content) && isset($_POST["string"])) {
