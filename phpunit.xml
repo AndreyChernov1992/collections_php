@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.1/phpunit.xsd" backupGlobals="false" bootstrap="vendor/autoload.php" colors="true" processIsolation="false" stopOnError="false" stopOnFailure="false" stopOnIncomplete="false" stopOnSkipped="false" stopOnRisky="false" timeoutForSmallTests="1" timeoutForMediumTests="10" timeoutForLargeTests="60" cacheDirectory=".phpunit.cache" backupStaticProperties="false" requireCoverageMetadata="true">
+  <coverage>
+    <report>
+      <clover outputFile="tests/coverage/clover.xml"/>
+      <html outputDirectory="tests/coverage/html" lowUpperBound="60" highLowerBound="95"/>
+      <php outputFile="tests/coverage/coverage.serialized"/>
+      <text outputFile="php://stdout" showUncoveredFiles="true"/>
+    </report>
+  </coverage>
+  <testsuites>
+    <testsuite name="Omega FaultManager Unit Test Suite">
+      <directory suffix="Test.php">tests</directory>
+    </testsuite>
+  </testsuites>
+  <logging>
+    <testdoxHtml outputFile="tests/coverage/testdox.html"/>
+    <testdoxText outputFile="php://stdout"/>
+  </logging>
+  <source>
+    <include>
+      <directory suffix=".php">./src</directory>
+    </include>
+    <exclude>
+      <directory>vendor</directory>
+      <directory suffix=".php">tests</directory>
+      <directory suffix=".php">_compiled</directory>
+    </exclude>
+  </source>
+</phpunit>

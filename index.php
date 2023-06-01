@@ -12,24 +12,43 @@ Number of unique characters:
 require_once __DIR__ . "/vendor/autoload.php";
 
 use App\App\UniqueCount;
-use App\App\CustomArrayCache;
 
-$str = "";
-$cache = new CustomArrayCache($str);
-$count = new UniqueCount($str);
+$count = new UniqueCount();
+$file=$_SERVER ["DOCUMENT_ROOT"] . "/cache.txt";
+$f=fopen($file, "a");
+$content = file_get_contents($file);
+$unserr = unserialize($content);
 
-if($cache->exists($str)) {
-    $cached_str = $cache->fetch($str);
-    echo $count->countUnique($cached_str);
+if(!empty($content) && isset($_POST["string"])){
+    $str = $_POST["string"];
+    
+    if(array_key_exists($str, $unserr)){
+        echo $unserr[$str];
+    }
+
+    else {
+        $result = strval($count->countUnique($str));
+        $unserr[$str] = $result;
+        $serr = serialize($unserr);
+        fputs($f, $serr);
+        fclose($f);
+        echo $result;
+    }   
+    var_dump ($unserr);
 }
 
-elseif(isset($_POST["string"])){
-    $cache->store($str, $str);
+if(empty($content) && isset($_POST["string"])) {
     $str = $_POST["string"];
-    echo $count->countUnique($str);
+    $result = strval($count->countUnique($str));
+    $unserr[$str] = $result;
+    $serr = serialize($unserr);
+    fputs($f, $serr);
+    fclose($f);
+    echo $result;
 }
 
 ?>
+
 <h3>Input form</h3>
 <form method="POST">
     <p>String: <input type="text" name="string" /></p>
