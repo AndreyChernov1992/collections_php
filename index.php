@@ -11,39 +11,24 @@ Number of unique characters:
 
 require_once __DIR__ . "/vendor/autoload.php";
 
-use App\App\UniqueCount;
+use App\App\Cache;
 
-$count = new UniqueCount();
-$file=$_SERVER ["DOCUMENT_ROOT"] . "/cache.txt";
-$f=fopen($file, "a");
-$content = file_get_contents($file);
-$unserr = unserialize($content);
+$cache = new Cache;
 
-if(!empty($content) && isset($_POST["string"])){
+if(!empty($cache->content) && isset($_POST["string"])){
     $str = $_POST["string"];
     
-    if(array_key_exists($str, $unserr)){
-        echo $unserr[$str];
+    if($cache->has($str)){
+        $cache->get($str);
     }
 
     else {
-        $result = strval($count->countUnique($str));
-        $unserr[$str] = $result;
-        $serr = serialize($unserr);
-        fputs($f, $serr);
-        fclose($f);
-        echo $result;
+        $cache->set($str);
     }   
 }
 
-if(empty($content) && isset($_POST["string"])) {
-    $str = $_POST["string"];
-    $result = strval($count->countUnique($str));
-    $unserr[$str] = $result;
-    $serr = serialize($unserr);
-    fputs($f, $serr);
-    fclose($f);
-    echo $result;
+if(empty($cache->content) && isset($_POST["string"])) {
+    $cache->set($str);
 }
 
 ?>

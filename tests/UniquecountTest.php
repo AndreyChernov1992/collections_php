@@ -11,15 +11,17 @@ use PHPUnit\Framework\TestCase;
 
 class UniquecountTest extends TestCase {
     private UniqueCount $object;
+    private $anInvalidArgument;
 
     protected function setUp() :void {
         $this->object = new UniqueCount;
+        $this->anInvalidArgument = NULL;
     }
 
     public function addDataProvider() {
         return array(
             array("asdfg", 5),
-            array("gwdqe", 5),
+            array("aabbccdf", 2),
         );
     }
 
@@ -31,5 +33,10 @@ class UniquecountTest extends TestCase {
     public function testString($a, $b) :void {
         $result = $this->object->countUnique($a);
         $this->assertEquals($result, $b);
+    }
+
+    public function testException() :void {
+        $this->expectException(\TypeError::class);
+        $this->object->countUnique($anInvalidArgument);
     }
 }
