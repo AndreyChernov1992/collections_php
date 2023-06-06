@@ -6,11 +6,11 @@ use App\App\UniqueCount;
 
 class Cache implements CacheInterface {
 
-    public $count;
-    public $file;
-    public $f;
+    private $count;
+    private $file;
+    private $f;
     public $content;
-    public $unserr;
+    private $unserr;
 
     public function set(string $str) :void {
         $result = strval($this->count->countUnique($str));
@@ -29,7 +29,7 @@ class Cache implements CacheInterface {
         return array_key_exists($str, $this->unserr);
     }
 
-    public function __construct () {
+    private function __construct () {
         $this->count = new UniqueCount();
         $this->file=$_SERVER ["DOCUMENT_ROOT"] . "/cache.txt";
         $this->f=fopen($this->file, "a");
