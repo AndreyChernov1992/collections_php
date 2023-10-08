@@ -15,7 +15,8 @@ use App\App\Cache;
 
 $cache = new Cache;
 
-if(!empty($cache->content) && isset($_POST["string"])){
+if(!empty($cache->content) && isset($_POST["string"]))
+{
     $str = $_POST["string"];
     
     if($cache->has($str)){
@@ -27,7 +28,8 @@ if(!empty($cache->content) && isset($_POST["string"])){
     }   
 }
 
-if(empty($cache->content) && isset($_POST["string"])) {
+if(empty($cache->content) && isset($_POST["string"])) 
+{
     $cache->set($str);
 }
 

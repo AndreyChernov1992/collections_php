@@ -2,7 +2,8 @@
 
 namespace App\App;
 
-interface CacheInterface {
+interface CacheInterface 
+{
 
     public function get(string $key): void;
 
